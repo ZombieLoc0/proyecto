@@ -1,5 +1,4 @@
 from threading import Thread, activeCount
-from random import random
 import socket
 
 #region SOCKET VARIABLES
