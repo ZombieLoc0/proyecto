@@ -49,12 +49,12 @@ def client_handler(conn, addr):
 
             if msg_lenght == 1:             #Los mensajes de la terminal son tamano 1
                 msg = conn.recv(msg_lenght).decode(FORMAT)
-                print(f'[Se recive: {addr}]El item: -{msg}')
+                print(f'[Se recibe: {addr}]El item: -{msg}')
                 put_in_queue(msg)
 
             elif msg_lenght > 1:            #Es un request del cashier es tamano 2 (o mas)
                 msg = conn.recv(msg_lenght).decode(FORMAT)
-                print(f'Mensaje recivido: {msg}')
+                print(f'Mensaje recibido: {msg}')
                 item  = send_item(msg)
                 conn.send(item.encode(FORMAT))
                 print(f'[Se envia a: {addr}]-El item: {item}')
