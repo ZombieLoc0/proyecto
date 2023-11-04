@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 
 HEADER = 64
 PORT = 12345
-SERVER = '192.168.1.65'
+SERVER = '192.168.100.10'
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 

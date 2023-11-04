@@ -15,14 +15,20 @@ server.bind((SERVER, PORT))
 #Shared Variables
 item = 0
 item_queues = []
+daily_tasks = []
+current_dt_indexes = []
+
 
 def put_in_queue(item):
-    for q in item_queues:
+    for i, q in enumerate(item_queues):
         if len(q) > 0 and item == q[0]:
             q.append(item)
-            print(len(q))
+            daily_tasks[i].append(len(daily_tasks[i]))
+            print(f'DT{daily_tasks},DTI{current_dt_indexes}')
             return
     item_queues.append([item, item])
+    daily_tasks.append([0])
+    current_dt_indexes.append(0)
 
 def send_item(request):
     item = "xy"
@@ -34,9 +40,11 @@ def send_item(request):
 
     try:
         item = item.replace('x', item_queues[index].pop(1))
+        item += str(daily_tasks[index][current_dt_indexes[index]])
+        current_dt_indexes[index] += 1
     except:
         item = item.replace('x', 'n')
-
+        
     print(item)
     return item
     
