@@ -27,6 +27,12 @@ header{
     height: auto;
     
 }
+.layout .form1{
+    display: grid;
+    width: auto;
+    height: auto;
+    
+}
 /* Estilo de botón bonito */
 .button {
     display: inline-block;
@@ -47,4 +53,29 @@ header{
 .button:hover {
     background-color: #682821; /* Cambia el color de fondo en el hover según tus preferencias */
     transform: scale(1.05); /* Cambia el tamaño del botón en el hover según tus preferencias */
+}
+.button1{
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #a7706a; /* Cambia el color del botón según tus preferencias */
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+    margin: 13px;
+    margin-top: 120px;
+    height: 150px;
+    font-size: 50px;
+}
+.button1:hover {
+    background-color: #682821; /* Cambia el color de fondo en el hover según tus preferencias */
+    transform: scale(1.05); /* Cambia el tamaño del botón en el hover según tus preferencias */
+}
+#turno{
+    text-align: center;
+    font-size: 50px;
+    margin-right: 35px;
+    margin-top: 125px;
 }
