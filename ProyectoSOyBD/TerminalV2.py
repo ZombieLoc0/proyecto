@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 
 HEADER = 64
 PORT = 12345
-SERVER = '148.239.110.9'
+SERVER = '192.168.1.65'
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 
@@ -22,9 +22,9 @@ app = Flask(__name__)
 def terminal_page():
     if request.method == "POST":
         send(request.form["send"])
-        return render_template("web.html")
+        return render_template("Terminal.html")
     else:
-        return render_template("web.html")
+        return render_template("Terminal.html")
 
 #endregion
 

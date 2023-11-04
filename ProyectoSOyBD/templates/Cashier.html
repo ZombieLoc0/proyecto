@@ -5,20 +5,18 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Fast-Q</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" type='text/css' media='screen' href="{{ url_for('static', filename='src/styles.css') }}"/>
+    <link rel="stylesheet" type='text/css' media='screen' href="{{ url_for('static', filename='src/styles.css') }}"/> <!-- {{ url_for('static', filename='src/styles.css') }}-->
     <script src='main.js'></script>
 </head>
 <body>
     <header>
-        <h1>Vista desde el cajero</h1>
+        <h1>Turno en curso:</h1>
     </header>
 
     <div class="layout">
-        <form class="form" action="#" method="post">
-            <input class="button" type="submit" name="send" value="A">
-            <input class="button" type="submit" name="send" value="B">
-            <input class="button" type="submit" name="send" value="C">
-            <input class="button" type="submit" name="send" value="D">
+        <form class="form1" action="#" method="post">
+            <ul id="turno">Sin turno</ul>
+            <input class="button1" type="submit" name="send" value="Obtener turno">
         </form>        
     </div>
 

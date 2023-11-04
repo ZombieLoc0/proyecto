@@ -7,14 +7,21 @@ import socket
 #region SOOCKET VARIABLES
 
 HEADER = 64
-PORT = 5050 
-SERVER = '148.239.124.112'
+PORT = 12345 
+SERVER = '192.168.1.65'
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
 #endregion
+
+app = Flask(__name__)
+
+@app.route("/cashier-page")
+def cashier_page():
+    return render_template("Cashier.html")
+
 
 def send_request(msg):
     message = msg.encode(FORMAT)
@@ -34,7 +41,7 @@ def start():
         send_request(currentTask)
 
         task = client.recv(HEADER).decode(FORMAT)
-        print(f'Se recivio la Task: {task}')
+        print(f'Se recibio la Task: {task}')
 
         if task[1] == 't':
             currentTask = startTask
@@ -49,7 +56,10 @@ def start():
 
             send_request(currentTask)
             task = client.recv(HEADER).decode(FORMAT)
-            print(f'Se recivio la Task: {task}')
+            print(f'Se recibio la Task: {task}')
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
 
 
 start()
