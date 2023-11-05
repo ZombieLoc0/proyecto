@@ -24,7 +24,6 @@ def put_in_queue(item):
         if len(q) > 0 and item == q[0]:
             q.append(item)
             daily_tasks[i].append(len(daily_tasks[i]))
-            print(f'DT{daily_tasks},DTI{current_dt_indexes}')
             return
     item_queues.append([item, item])
     daily_tasks.append([0])

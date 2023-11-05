@@ -23,47 +23,53 @@ app = Flask(__name__)
 @app.route("/cashier-page", methods = ["GET", "POST"])
 def cashier_page():
     if request.method == "POST":
-        start()
+        cahiser_handler()
     
     return render_template("Cashier.html", Turn = turn)
 
+@app.route("/terminal-page", methods=["GET", "POST"])
+def terminal_page():
+    if request.method == "POST":
+        send_msg(request.form["send"])
+        return render_template("Terminal.html")
+    else:
+        return render_template("Terminal.html")
 
-def send_request(msg):
+def send_msg(msg):
     message = msg.encode(FORMAT)
     msg_lenght = len(message)
     send_lenght = str(msg_lenght).encode(FORMAT)
     send_lenght += b' ' * (HEADER - len(send_lenght))
     client.send(send_lenght)
     client.send(message)
-    print('Mensaje Enviado')
 
-def start():
+def cahiser_handler():
     global currentTask
     global turn
 
-    send_request(currentTask)
+    send_msg(currentTask)
     
     task = client.recv(HEADER).decode(FORMAT)
     print(f'Se recibio la Task: {task}')
 
-    if task.find('t'):
+    if task.find('t') >= 0:
         currentTask = '00'
     
     currentTask = currentTask.replace(currentTask[0], str(int(currentTask[0]) + 1))
     
-    while task.find('n'):
+    print(task.find('n'))
+    
+    while task.find('n') >= 0:
         sleep(3)
-        if task.find('t'):
+        if task.find('t') >= 0:
             currentTask = startTask
+
         currentTask = currentTask.replace(currentTask[0], str(int(currentTask[0]) + 1))
-        send_request(currentTask)
+        send_msg(currentTask) 
         task = client.recv(HEADER).decode(FORMAT)
         print(f'Se recibio la Task: {task}')
+    
     turn = task
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-
-
-start()
