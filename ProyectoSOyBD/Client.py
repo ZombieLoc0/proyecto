@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request
 from time import sleep
 import socket
-
 #region SOOCKET VARIABLES
 
 HEADER = 64
 PORT = 12345 
-SERVER = '192.168.100.10'
+SERVER = '192.168.1.67'
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,7 +15,7 @@ client.connect(ADDR)
 
 startTask = '00'
 currentTask = startTask
-turn = 'Caquita'
+turn = 'Sin turno'
 
 app = Flask(__name__)
 

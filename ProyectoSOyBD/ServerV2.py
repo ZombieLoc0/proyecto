@@ -1,6 +1,6 @@
 from threading import Thread, activeCount
 import socket
-
+import sqlite3
 #region SOCKET VARIABLES
 HEADER = 64
 PORT = 12345
@@ -18,6 +18,19 @@ item_queues = []
 daily_tasks = []
 current_dt_indexes = []
 
+#Database connection
+
+
+def insertRegistroMov(cursor, movimiento):
+    cursor.execute("INSERT INTO Registro_movimentos (fecha, tipo_movimiento) VALUES (CURRENT_DATE, ?)", (movimiento,))
+
+def printRegistroMov(cursor):
+    cursor.execute("SELECT * FROM Registro_movimentos")
+    registros = cursor.fetchall()
+
+    print("Registros en la tabla Registro_movimientos:")
+    for registro in registros:
+        print(f"ID: {registro[0]}, Fecha: {registro[1]}, Tipo de Movimiento: {registro[2]}")
 
 def put_in_queue(item):
     for i, q in enumerate(item_queues):
@@ -49,6 +62,10 @@ def send_item(request):
     
 def client_handler(conn, addr):
     connected = True
+
+    conndb = sqlite3.connect('FastQ.db')
+    cursor = conndb.cursor()
+
     while connected:
         msg_lenght = conn.recv(HEADER).decode(FORMAT)
         if msg_lenght:
@@ -58,6 +75,9 @@ def client_handler(conn, addr):
                 msg = conn.recv(msg_lenght).decode(FORMAT)
                 print(f'[Se recibe: {addr}]El item: -{msg}')
                 put_in_queue(msg)
+                insertRegistroMov(cursor, msg)
+                conndb.commit()
+                #printRegistroMov(cursor)
 
             elif msg_lenght > 1:            #Es un request del cashier es tamano 2 (o mas)
                 msg = conn.recv(msg_lenght).decode(FORMAT)
@@ -65,7 +85,8 @@ def client_handler(conn, addr):
                 item  = send_item(msg)
                 conn.send(item.encode(FORMAT))
                 print(f'[Se envia a: {addr}]-El item: {item}')
-            
+    cursor.close()
+    conndb.close()
     conn.close()
 
 def start_server():
@@ -78,6 +99,5 @@ def start_server():
 
         print('[NUEVA CONEXION]')
         print(f'[CONEXIONES ACTIVAS] - {activeCount()-1}')
-
 
 start_server()
